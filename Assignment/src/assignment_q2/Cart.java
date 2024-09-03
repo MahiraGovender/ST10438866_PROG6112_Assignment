@@ -19,18 +19,23 @@ public class Cart {
         itemCount++;
     }
 
-    public void removeItem(String itemName) {
-        for (int i = 0; i < itemCount; i++) {
-            if (items[i].getName().equals(itemName)) {
-                total -= items[i].getTotalPrice();
-                for (int j = i; j < itemCount - 1; j++) {
-                    items[j] = items[j + 1];
-                }
-                itemCount--;
-                break;
+   public void removeItem(String itemName) {
+    boolean itemFound = false;
+    for (int i = 0; i < itemCount; i++) {
+        if (items[i].getName().equalsIgnoreCase(itemName)) {
+            total -= items[i].getTotalPrice();
+            for (int j = i; j < itemCount - 1; j++) {
+                items[j] = items[j + 1];
             }
+            itemCount--;
+            itemFound = true;
+            break;
         }
     }
+    if (!itemFound) {
+        JOptionPane.showMessageDialog(null, "Item not found in cart.");
+    }
+}
 
    public void displayCart() {
     StringBuilder cartString = new StringBuilder("Shopping Cart:\n");

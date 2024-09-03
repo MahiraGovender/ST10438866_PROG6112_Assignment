@@ -50,7 +50,7 @@ public class ShoppingCart {
                             menuString += (i + 1) + ". " + menuItems[i].getName() + " - $" + menuItems[i].getPrice() + "\n";
                         }
                         String menuItemNumberString = JOptionPane.showInputDialog(menuString);
-                        if (menuItemNumberString.equals(null)) {
+                        if (menuItemNumberString == null) {
                             JOptionPane.showMessageDialog(null, "Please enter a value");
                             return;
                         }
@@ -58,7 +58,7 @@ public class ShoppingCart {
                         if (menuItemNumber > 0 && menuItemNumber <= menuItems.length) {
                             Items selectedItem = menuItems[menuItemNumber - 1];
                             String quantityString = JOptionPane.showInputDialog("Enter quantity:");
-                            if (quantityString.equals(null)) {
+                            if (quantityString == null) {
                                 JOptionPane.showMessageDialog(null, "Please enter a value");
                                 return;
                             }
@@ -74,7 +74,7 @@ public class ShoppingCart {
                         break;
                     case 2: //deleting items from shopper's cart
                         String removeName = JOptionPane.showInputDialog("Enter item name to remove:");
-                        if (removeName.equals(null)) {
+                        if (removeName == null) {
                             JOptionPane.showMessageDialog(null, "Please enter a value");
                             return;
                         }
