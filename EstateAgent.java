@@ -2,54 +2,66 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package progthe_q1;
-//https://github.com/fb-shaik/PROG6112-Group3-2023/tree/main/Zoo_Application_Interface - code was adapated from github 
- interface IEstateAgent {
-    double estateAgentSales(double[] propertySales);
-    double estateAgentCommission(double totalSales);
-    int topEstateAgent(double[] totalSales);
+package progthe_q2;
+//https://github.com/fb-shaik/PROG6112-Group3-2023/tree/main/Zoo_Application_Interface code was adapted from github 
+interface IEstateAgent {
+   
+double CalculateTotalCommission(String propertyPriceValue, String commissionPercentageValue);
+boolean DataValidiation(String estateAgentNameValue, String Agentlocation, String propertyPrice, String CommissionPercentage);
+
 }
+public class EstateAgent implements IEstateAgent {
 
-  class EstateAgent implements IEstateAgent{
-    
-    @Override
-    public double estateAgentSales(double[] propertySales) {
-        double totalSales = 0;
-        for (double sale : propertySales) {
-            totalSales += sale;
-        }
-        return totalSales;
+    @Override // methods hat calculates the amount of commission that will be charged 
+    public double CalculateTotalCommission(String propertyPriceValue, String commissionPercentageValue) {
+     Double Price = Double.parseDouble(propertyPriceValue) ;
+     Double AgentCommission = Double.parseDouble(commissionPercentageValue) ;
+     Double commission = (AgentCommission / 100) * Price; // Arthimetic calculation based on the user's comission percentage
+     
+        return commission ;
     }
-    
-     @Override
-    public int topEstateAgent(double[] totalSales) {
-        int topAgentIndex = 0;
-        double maxSales = totalSales[0];
-//https://www.youtube.com/watch?v=aaKBJ7OAieA 
-        for (int i = 1; i < totalSales.length; i++) {
-            if (totalSales[i] > maxSales) {
-                maxSales = totalSales[i];
-                topAgentIndex = i;
+
+    @Override//this method checks if all requirements are met when accepting users information 
+    public boolean DataValidiation(String estateAgentNameValue, String Agentlocation, String propertyPrice, String CommissionPercentage) {
+        // https://www.youtube.com/watch?v=-l1p55G4qGk code was adapted from this video 
+        String name = estateAgentNameValue ;
+        String location = Agentlocation ;
+        Double price = Double.parseDouble(propertyPrice) ;
+        Double commission = Double.parseDouble(CommissionPercentage) ;
+        
+         if (location.isEmpty()) {//checks is the location field is empty 
+            return false;
+        }
+
+        // Check if the agent name is empty
+        if (name.isEmpty()) {// checks if the name field is empty 
+            return false;
+        }
+
+        // Check if the property price is valid
+        try {
+          
+            if (price <= 0) {
+                return false;// checks if the price of property is less than or equal to zero 
             }
+        } catch (Exception e) {
+            return false;
         }
 
-        return topAgentIndex;
-    }
-    
-     @Override
-    public double estateAgentCommission(double totalSales) {
-        
-        return totalSales * 2/100;
-    }
-    
-    public double[] CalculateTotalSales_ReturnsTotalSales(double[][] PropertySales_Arr ){
-        
-        double [] totalSales = new double[PropertySales_Arr.length];
-        
-        for (int i = 0; i < PropertySales_Arr.length; i++) {
-            totalSales[i] = estateAgentSales(PropertySales_Arr[i]);
+        // Check if the commission percentage is less than or equal to zero 
+        try {
+            
+            if (commission <= 0) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
         }
-        return totalSales;
+
+        
+        return true;
+
     }
+
     
 }
